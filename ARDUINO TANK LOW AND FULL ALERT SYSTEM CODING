@@ -1,0 +1,43 @@
+// Define pin numbers
+const int waterLevelSensorPin = A0; // Water level sensor connected to A0
+const int ledPin = 13;              // LED connected to pin 13
+const int buzzerPin = 12;           // Buzzer connected to pin 12
+
+// Define thresholds for tank full and low water levels
+const int fullThreshold = 700;   // Adjust this value based on your sensor's calibration for full
+const int lowThreshold = 300;    // Adjust this value based on your sensor's calibration for low
+
+void setup() {
+  // Start serial communication for debugging
+  Serial.begin(9600);
+
+  // Set the LED and Buzzer pins as output
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop() {
+  // Read the water level from the sensor
+  int waterLevel = analogRead(waterLevelSensorPin);
+
+  // Print water level for debugging
+  Serial.println(waterLevel);
+
+  // Check if the tank is full
+  if (waterLevel >= fullThreshold) {
+    digitalWrite(buzzerPin, HIGH); // Turn on buzzer when tank is full
+    digitalWrite(ledPin, LOW);     // Turn off LED when tank is full
+  }
+  // Check if the tank is low
+  else if (waterLevel <= lowThreshold) {
+    digitalWrite(ledPin, HIGH);    // Turn on LED when water level is low
+    digitalWrite(buzzerPin, LOW);  // Turn off buzzer when tank is low
+  }
+  else {
+    digitalWrite(buzzerPin, LOW);  // Turn off buzzer if tank is neither full nor low
+    digitalWrite(ledPin, LOW);     // Turn off LED if water level is normal
+  }
+
+  // Wait before the next reading
+  delay(500);
+}
