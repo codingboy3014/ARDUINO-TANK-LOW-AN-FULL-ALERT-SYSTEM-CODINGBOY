@@ -1,0 +1,5 @@
+Water Level Sensor: Connected to an analog pin (e.g., A0) 
+
+LED: Connected to pin 13
+
+Buzzer: Connected to pin 12
